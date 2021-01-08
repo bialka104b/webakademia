@@ -1,0 +1,19 @@
+{
+    "recommendations": [
+        "formulahendry.auto-close-tag",
+        "formulahendry.auto-rename-tag",
+        "editorconfig.editorconfig",
+        "dbaeumer.vscode-eslint",
+        "zignd.html-css-class-completion",
+        "felixfbecker.php-debug",
+        "jeremyljackson.vs-docblock",
+        "bmewburn.vscode-intelephense-client",
+        "mehedidracula.php-namespace-resolver",
+        "ikappas.phpcs",
+        "octref.vetur",
+        "onecentlin.laravel-blade",
+        "codingyu.laravel-goto-view",
+        "stef-k.laravel-goto-controller",
+        "junstyle.php-cs-fixer"
+    ]
+}
