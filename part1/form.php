@@ -38,12 +38,18 @@ else {
 </head>
 <body>
     <div>Formularz POST</div>
-    <form method="POST" name="form1" action="form-action.php" >
+    <form method="POST" name="form1" action="form-action.php" enctype="multipart/form-data">
         <input type="text" name="vin1" value="<?php echo $var1; ?>">
+        <input type="radio" name="reg" value="1"/>
+        <input type="radio" name="reg" value="2"/>
+        <input type="radio" name="reg" value="3"/>
+        <input type="checkbox" name="agr1" value="3"/>
+        <input type="checkbox" name="agr2" value="3"/>
+        <input type="file" name="plik" >
         <input type="submit" name="submit">
     </form>
-    <div>Formularz POST 2</div>
-    <form method="POST" name="form2" action="" >
+    <div>Formularz POST 2 - ajax</div>
+    <form name="form2" id="form2" >
         <input type="text" name="var1" value="<?php echo $var1; ?>">
         <input type="submit" name="submit">
     </form>
@@ -53,7 +59,28 @@ else {
         <input type="submit" name="submit">
     </form>
     <script>
-    //TODO script
+
+    const myForm = document.getElementById('form2');
+
+        myForm.addEventListener('submit', function(e){
+            console.log("subimt");
+            e.preventDefault();
+            const formData = new FormData(this);
+            fetch("http://localhost/webakademia/part1/form-action.php",
+                {
+                    method: 'POST',
+                    mode: 'same-origin',
+                    credentials: 'same-origin',
+                    body: formData
+                }).then(function(response) {
+                    return response.text;
+                }).then(function(text) {
+                    console.log(text);
+                });
+            
+
+        });
+
     </script>
 </body>
 </html>
