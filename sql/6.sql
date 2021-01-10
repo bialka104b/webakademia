@@ -1,0 +1,1 @@
+SELECT title, from_date FROM employees.titles;

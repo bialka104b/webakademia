@@ -1,0 +1,1 @@
+SELECT dept_name FROM employees.departments

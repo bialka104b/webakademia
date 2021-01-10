@@ -1,0 +1,1 @@
+SELECT distinct(first_name) FROM employees.employees order by first_name;
