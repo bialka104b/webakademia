@@ -1,0 +1,10 @@
+.currency{
+    border:1px solid red;
+
+}
+form select{
+    display: block;
+}
+.result {
+    border:1px solid green;
+}

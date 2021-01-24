@@ -13,67 +13,38 @@
  * Text Domain:       webakademia-currency
  * Domain Path:       /languages
  */
+namespace webakademia;
 
-function showCurrency( $atts ) {
-    try {
-        $res = file_get_contents('http://api.nbp.pl/api/exchangerates/tables/a/2021-01-01/2021-01-21/');
-        $jsonCurrency = json_decode($res);
-        
-        $currency = array();
+use webakademia\admin\Admin;
+use webakademia\pub\ShortCode;
 
-        $str = '<div class="currency">';
-       foreach($jsonCurrency as $key => $obj)
-        {
-            $str .= "<p>".$obj->effectiveDate."</p>";
-            foreach($obj->rates as $rate)
-            {
-                $str .= "<p>".$rate->currency." ".$rate->code." ".$rate->mid; 
-                $currency[$rate->code][$obj->effectiveDate] = $rate->mid;
-            }
-        }
-        $str .='</div>';
-        $str .= getForm($currency);
-        // echo '<pre>';
-        // print_r($currency);
-        // echo '</pre>';
+require_once __DIR__. DIRECTORY_SEPARATOR . "vendor" . DIRECTORY_SEPARATOR . "autoload.php";
 
-    } catch (\Throwable $th) {
-        $str = "Problem z pobraniem danych";
-    }
-    return $str;
-}
-
-function getForm($currency): string
-{
-    $form = '<form name="currency-form">';
-    $form .= '<input name="pln" value="" />';
-    $form .= getSelect('currency','currency');
-    $form .= getSelect('date','date');
-    $form .= '</input>';
-    return $form;
-}
-
-function getSelect(string $id,string $name,array $options = array()): string
-{
-    $select = '<select name="'.$name.'" id="'.$id.'">';
-    foreach ($options as $key => $val)
-    {
-        $select .= '<option value="'.$key.'">'.$val.'</option>';
-    }
-    $select .= '</select>';
-    return $select;
-}
-
-add_shortcode( 'showcurrency', 'showCurrency' );
-
+//admin panel
 if(is_admin())
 {
-    add_action('admin_menu', 'my_menu');
+    //podczas rejestracji hook'ow przy namespace musimy podac dokladnie namespace do klasy i statyczna metode ktora chcemy wykonac
+    \register_activation_hook( __FILE__, array('webakademia\\lib\\Activate','webakademia_activate'));
+    \register_deactivation_hook(__FILE__, array('webakademia\\lib\\Deactivate','webakademia_deactivate') );
+    \register_uninstall_hook(__FILE__, array('webakademia\\lib\\Unistall','webakademia_unistall'));
 
-    function my_menu() {
-        add_menu_page('My Page Title', 'My Menu Title', 'manage_options', 'my-page-slug', 'my_function');
-    }
-    function my_function() {
-        echo 'Hello world!';
-    }
+    //tworzenie menu i obsluga panelu
+     $admin = new Admin();
+     $admin->createMenu();
+
+} else {
+    require_once __DIR__. DIRECTORY_SEPARATOR . "lib" . DIRECTORY_SEPARATOR . "function.php";
+    //require_once __DIR__. DIRECTORY_SEPARATOR . "public" . DIRECTORY_SEPARATOR . "shortcode.php";
+    $public = new ShortCode();
+    $public->registerStyle();
+    $public->registerScript();
+    $public->addShortCodeshowCurreny();
 }
+
+
+
+
+
+
+
+

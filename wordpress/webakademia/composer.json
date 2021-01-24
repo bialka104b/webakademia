@@ -1,0 +1,19 @@
+{
+    "name": "g.kucharski/webakademia",
+    "description": "Currency",
+    "type": "project",
+    "license": "GPL",
+    "autoload": {
+        "psr-4": {
+            "webakademia\\lib\\" : "lib/",
+            "webakademia\\admin\\" : "admin/",
+            "webakademia\\pub\\" : "public/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Grzegorz Kucharski"
+        }
+    ],
+    "require": {}
+}
